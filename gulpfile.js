@@ -4,13 +4,10 @@ const runSequence = require('run-sequence');
 
 
 const WATCH_PATTERN = './*.md';
-function gitAdd(event) {
-    // gulp.src(event.file)
-    console.info(event);
-}
 
 gulp.task('add', () => {
-    git.add();
+    return gulp.src(WATCH_PATTERN)
+        .pipe(git.add());
 });
 
 gulp.task('commit', () => {
@@ -31,7 +28,6 @@ gulp.task('status', () => {
 });
 
 gulp.task('upload', () => {
-
     runSequence(
         'status',
         'add',
