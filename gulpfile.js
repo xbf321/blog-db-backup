@@ -14,20 +14,17 @@ gulp.task('add', () => {
 });
 
 gulp.task('commit', () => {
-    console.info('commit');
-    return gulp.src(WATCH_PATTERN)
-                .pipe(git.commit('update *.md'));
+    gulp.src(WATCH_PATTERN)
+        .pipe(git.commit('update *.md'));
 });
 
 gulp.task('push', () => {
-    console.info('push');
     git.push('origin', 'master', (err) => {
         if (err) throw err;
     });
 });
 
 gulp.task('status', () => {
-    console.info('status');
     git.status({args: '--porcelain'}, function (err, stdout) {
         if (err) throw err;
     });
@@ -44,30 +41,8 @@ gulp.task('upload', () => {
         if (error) throw error;
         console.info('success');
     });
-    // gulp.src(WATCH_PATTERN)
-    //     .pipe(git.status({args: '--porcelain'}, function (err, stdout) {
-    //         if (err) throw err;
-    //     }))
-    //     .pipe(git.add())
-    //     .pipe(git.commit('update *.md'))
-    //     .pipe(git.push('origin', 'master', (err) => {
-    //         if (err) throw err;
-    //     }));
 });
 
 gulp.task('default', function() {
-    // 将你的默认的任务代码放在这
-    const watcher = gulp.watch(WATCH_PATTERN, ['upload']);
-    watcher.on('change', gitAdd);
+    gulp.watch(WATCH_PATTERN, ['upload']);
 });
-
-// gulp.task('release', function(callback) {
-//     runSequence('', function(error) {
-//         if (error) {
-//             console.log(error.message);
-//         } else {
-//         console.log('RELEASE FINISHED SUCCESSFULLY');
-//         }
-//         callback(error);
-//     });
-// });
