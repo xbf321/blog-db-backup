@@ -1,0 +1,10 @@
+{
+  "name": "blog-db-backup",
+  "version": "1.0.0",
+  "description": "blog db backup",
+  "author": "xbf321@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
