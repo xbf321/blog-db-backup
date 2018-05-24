@@ -41,7 +41,7 @@ gulp.task('upload', () => {
         'commit',
         'push',
         (error) => {
-        if (err) throw err;
+        if (error) throw error;
         console.info('success');
     });
     // gulp.src(WATCH_PATTERN)
