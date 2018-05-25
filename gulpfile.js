@@ -2,14 +2,17 @@ const gulp = require('gulp');
 const git = require('gulp-git');
 const runSequence = require('run-sequence');
 const request = require('request');
+const fs = require('fs');
+const path = require('path');
 
-// http://sc.ftqq.com/3.version
+const WATCH_PATTERN = './*.db';
 
-const sendMessage = () => {
-    const url = `https://sc.ftqq.com/SCU4033T165470d6b883bb3d1a649022022d86cf5833be77c4590.send?text=blog-db-backup&desp=fail`;
-    request.get(url);
-}
-const WATCH_PATTERN = './*.md';
+gulp.task('copy', () => {
+    const sourceFile = 'xxx/xx.db';
+    const destFile = path.join(__dirname, 'ghost.db');
+    fs.createReadStream(sourceFile)
+        .pipe(fs.createWriteStream(destFile));
+});
 
 gulp.task('add', () => {
     return gulp.src(WATCH_PATTERN)
@@ -18,7 +21,7 @@ gulp.task('add', () => {
 
 gulp.task('commit', () => {
     return gulp.src(WATCH_PATTERN)
-                .pipe(git.commit('update *.md'));
+                .pipe(git.commit('update *.db'));
 });
 
 gulp.task('push', () => {
@@ -33,7 +36,7 @@ gulp.task('status', () => {
     });
 });
 
-gulp.task('default', () => {
+gulp.task('default', ['copy'], () => {
     runSequence(
         'status',
         'add',
@@ -41,7 +44,8 @@ gulp.task('default', () => {
         'push',
         (error) => {
         if (error) {
-            sendMessage();
+            const url = `https://sc.ftqq.com/SCU4033T165470d6b883bb3d1a649022022d86cf5833be77c4590.send?text=blog-db-backup&desp=fail`;
+            request.get(url);
         }
     });
 });
