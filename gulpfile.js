@@ -1,8 +1,14 @@
 const gulp = require('gulp');
 const git = require('gulp-git');
 const runSequence = require('run-sequence');
+const request = require('request');
 
+// http://sc.ftqq.com/3.version
 
+const sendMessage = () => {
+    const url = `https://sc.ftqq.com/SCU4033T165470d6b883bb3d1a649022022d86cf5833be77c4590.send?text=blog-db-backup&desp=fail`;
+    request.get(url);
+}
 const WATCH_PATTERN = './*.md';
 
 gulp.task('add', () => {
@@ -27,18 +33,15 @@ gulp.task('status', () => {
     });
 });
 
-gulp.task('upload', () => {
+gulp.task('default', () => {
     runSequence(
         'status',
         'add',
         'commit',
         'push',
         (error) => {
-        if (error) throw error;
-        console.info('success');
+        if (error) {
+            sendMessage();
+        }
     });
-});
-
-gulp.task('default', function() {
-    gulp.watch(WATCH_PATTERN, ['upload']);
 });
