@@ -8,7 +8,7 @@ const path = require('path');
 const WATCH_PATTERN = './*.db';
 
 gulp.task('copy', () => {
-    const sourceFile = 'xxx/xx.db';
+    const sourceFile = '/var/www/ghost/content/data/ghost.db';
     const destFile = path.join(__dirname, 'ghost.db');
     fs.createReadStream(sourceFile)
         .pipe(fs.createWriteStream(destFile));
