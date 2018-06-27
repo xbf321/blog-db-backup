@@ -2,6 +2,13 @@
 
 blog backup
 
+## preload
+
+```
+npm install --global gulp
+npm install
+```
+
 ## run
 
 ```
